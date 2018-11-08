@@ -20,10 +20,13 @@ class HelloController extends Controller
     public function getHello(Request $request) {
         $userAgent = $request->header('User-Agent');
         $ip = $request->ip();
-        Log::info('IP:' . $ip . ', User-Agent:' . $userAgent);
-        return response()->json([
-            'user-agent' => $userAgent,
-            'ip' => $ip,
-        ]);
+        // Log::info('IP:' . $ip . ', User-Agent:' . $userAgent);
+        $logData= [
+            "ip" => $ip,
+            "User-Agent" => $userAgent,
+            "timestamps" => now()->toDateTimeString()
+        ];
+        Log::info(json_encode($logData));
+        return response()->json($logData);
     }
 }
